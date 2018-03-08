@@ -11,100 +11,25 @@
 </head>
 <body>
     <canvas id="drawing-board"></canvas>
+    <div class="color-group">
+        <ul>
+            <li id="white" class="color-item" style="background-color: white;"></li>
+            <li id="black" class="color-item active" style="background-color: black;"></li>
+            <li id="red" class="color-item" style="background-color: #FF3333;"></li>
+            <li id="blue" class="color-item" style="background-color: #0066FF;"></li>
+            <li id="yellow" class="color-item" style="background-color: #FFFF33;"></li>
+            <li id="green" class="color-item" style="background-color: #33CC66;"></li>
+            <li id="gray" class="color-item" style="background-color: gray;"></li>
+        </ul>
+    </div>
     <div class="tools">
         <button id="brush" class="active" title="画笔"><i class="iconfont icon-qianbi"></i></button>
         <button id="eraser" title="橡皮擦"><i class="iconfont icon-xiangpi"></i></button>
-        <button id="swatches" title="颜色"><i class="iconfont icon-color"></i></button>
+        <!--<button id="swatches" title="颜色"><i class="iconfont icon-color"></i></button>-->
         <button id="clear" title="清空"><i class="iconfont icon-qingchu"></i></button>
         <button id="undo" title="撤销"><i class="iconfont icon-chexiao"></i></button>
         <button id="save" title="保存"><i class="iconfont icon-fuzhi"></i></button>
     </div>
 </body>
-<script>
-    var canvas = document.getElementById("drawing-board");
-    var ctx = canvas.getContext("2d");
-    var eraser = document.getElementById("eraser");
-    var brush = document.getElementById("brush");
-    var clear = false;
-
-    autoSetSize(canvas);
-
-    listenToMouse(canvas);
-
-    function autoSetSize(canvas){
-        canvasSetSize();
-        function canvasSetSize() {
-            var pageWidth = document.documentElement.clientWidth;
-            var pageHeight = document.documentElement.clientHeight;
-
-            canvas.width = pageWidth;
-            canvas.height = pageHeight;
-        }
-        window.onresize = function () {
-            canvasSetSize();
-        }
-    }
-
-    function listenToMouse(canvas) {
-        var painting = false;
-        var lastPoint = {x:undefined,y:undefined};
-        canvas.onmousedown = function (e) {
-            painting = true;
-            var x = e.clientX;
-            var y = e.clientY;
-            if(clear){
-                ctx.clearRect(x - 5, y - 5, 10, 10)
-            }else {
-                lastPoint = {"x": x, "y": y};
-                drawCircle(x, y, 3);
-            }
-        }
-        canvas.onmousemove = function (e) {
-            if(painting){
-                var x = e.clientX;
-                var y = e.clientY;
-                var newPoint = {"x": x, "y": y};
-                if(clear){
-                    ctx.clearRect(x - 5, y - 5, 10, 10)
-                }else {
-                    drawCircle(x, y, 3);
-                    drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
-                }
-                lastPoint = newPoint;
-            }
-        }
-
-        canvas.onmouseup = function (e){
-            painting = false;
-        }
-    }
-
-    function drawCircle(x,y,radius) {
-        ctx.beginPath();
-        ctx.fillStyle = "black";
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    function drawLine(x1,y1,x2,y2) {
-        ctx.beginPath();
-        ctx.moveTo(x1,y1);
-        ctx.lineWidth = 6;
-        ctx.lineTo(x2,y2);
-        ctx.stroke();
-        ctx.closePath();
-    }
-
-    eraser.onclick = function(){
-        clear = true;
-        this.classList.add("active");
-        brush.classList.remove("active");
-    }
-
-    brush.onclick = function(){
-        clear = false;
-        this.classList.add("active");
-        eraser.classList.remove("active");
-    }
-</script>
+<script src="js/main.js"></script>
 </html>

@@ -1,13 +1,21 @@
 *{margin:0; padding: 0;user-select: none;}
 body{overflow:hidden}
 #drawing-board{background-color: aliceblue;display: block;cursor: crosshair;}
-.tools{position: fixed;left:0;bottom: 30px; width:100%;isplay: flex;justify-content: center;text-align: center}
-.tools button{border-radius: 50%;width: 50px;height: 50px; background-color: rgba(255,255,255,0.7);border: 1px solid #ccc;outline: none;cursor: pointer;box-sizing: border-box;margin: 0 10px;text-align: center;color:#ccc;line-height: 50px;transition: 0.3s;}
+.tools{position: fixed;left:0;bottom: 30px; width:100%;display: flex;justify-content: center;text-align: center}
+.tools button{border-radius: 50%;width: 50px;height: 50px; background-color: rgba(255,255,255,0.7);border: 1px solid #ccc;outline: none;cursor: pointer;box-sizing: border-box;margin: 0 10px;text-align: center;color:#ccc;line-height: 50px;box-shadow:0 0 8px rgba(0,0,0,0.1); transition: 0.3s;}
 .tools button.active,.tools button:active{box-shadow: 0 0 15px #00CCFF; color:#00CCFF;}
 .tools button i{font-size: 24px;}
+.color-group{position:fixed;width: 30px;left: 30px;top:50%;transform: translate(0,-150px)}
+.color-group ul{list-style: none;}
+.color-group ul li{width: 30px;height: 30px; border:1px solid #eee;margin: 10px 0;border-radius: 50%;box-sizing: border-box;border:3px solid white;box-shadow: 0 0 5px rgba(0,0,0,0.2);cursor: pointer;transition: 0.3s;}
+.color-group ul li.active{box-shadow:0 0 15px #00CCFF;}
 
 @media screen and (max-width: 768px) {
     .tools{top:20px;}
-    .tools button{width: 30px;height: 30px;line-height: 30px;}
+    .tools button{width: 35px;height: 35px;line-height: 35px;margin-bottom: 20px;box-shadow:0 0 5px rgba(0,0,0,0.1);}
+    .tools button.active,.tools button:active{box-shadow: 0 0 8px #00CCFF;}
     .tools button i{font-size: 18px;}
+    .tools #swatches{display: none}
+    .color-group{left: 0;top:auto;bottom: 20px;display: flex;width:100%;justify-content: center;text-align: center;transform: translate(0,0)}
+    .color-group ul li{display: inline-block;margin:0 5px;}
 }
