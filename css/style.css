@@ -11,8 +11,8 @@ body{overflow:hidden}
 .color-group ul li.active{box-shadow:0 0 15px #00CCFF;}
 
 @media screen and (max-width: 768px) {
-    .tools{top:20px;}
-    .tools button{width: 35px;height: 35px;line-height: 35px;margin-bottom: 20px;box-shadow:0 0 5px rgba(0,0,0,0.1);}
+    .tools{bottom:auto;top:20px;}
+    .tools button{width: 35px;height: 35px;line-height: 35px;margin-bottom: 15px;box-shadow:0 0 5px rgba(0,0,0,0.1);}
     .tools button.active,.tools button:active{box-shadow: 0 0 8px #00CCFF;}
     .tools button i{font-size: 18px;}
     .tools #swatches{display: none}
