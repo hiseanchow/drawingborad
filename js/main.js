@@ -10,9 +10,12 @@ var activeColor = 'black';
 
 autoSetSize(canvas);
 // setCanvasBGC('white');
+
 listenToUser(canvas);
 
-function autoSetSize(canvas){
+getColor();
+
+function autoSetSize(canvas) {
     canvasSetSize();
 
     function canvasSetSize() {
@@ -36,28 +39,28 @@ function setCanvasBGC(color) {
 
 function listenToUser(canvas) {
     var painting = false;
-    var lastPoint = {x:undefined,y:undefined};
+    var lastPoint = {x: undefined, y: undefined};
 
-    if(document.body.ontouchstart !== undefined){
+    if (document.body.ontouchstart !== undefined) {
         canvas.ontouchstart = function (e) {
             painting = true;
             var x = e.touches[0].clientX;
             var y = e.touches[0].clientY;
-            if(clear){
+            if (clear) {
                 ctx.clearRect(x - 5, y - 5, 10, 10)
-            }else {
+            } else {
                 lastPoint = {"x": x, "y": y};
                 drawCircle(x, y, 3);
             }
         }
         canvas.ontouchmove = function (e) {
-            if(painting){
+            if (painting) {
                 var x = e.touches[0].clientX;
                 var y = e.touches[0].clientY;
                 var newPoint = {"x": x, "y": y};
-                if(clear){
+                if (clear) {
                     ctx.clearRect(x - 5, y - 5, 10, 10)
-                }else {
+                } else {
                     drawCircle(x, y, 3);
                     drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
                 }
@@ -65,29 +68,29 @@ function listenToUser(canvas) {
             }
         }
 
-        canvas.ontouchend = function (e){
+        canvas.ontouchend = function (e) {
             painting = false;
         }
-    }else{
+    } else {
         canvas.onmousedown = function (e) {
             painting = true;
             var x = e.clientX;
             var y = e.clientY;
-            if(clear){
+            if (clear) {
                 ctx.clearRect(x - 5, y - 5, 10, 10)
-            }else {
+            } else {
                 lastPoint = {"x": x, "y": y};
                 drawCircle(x, y, 3);
             }
         }
         canvas.onmousemove = function (e) {
-            if(painting){
+            if (painting) {
                 var x = e.clientX;
                 var y = e.clientY;
                 var newPoint = {"x": x, "y": y};
-                if(clear){
+                if (clear) {
                     ctx.clearRect(x - 5, y - 5, 10, 10)
-                }else {
+                } else {
                     drawCircle(x, y, 3);
                     drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
                 }
@@ -95,41 +98,41 @@ function listenToUser(canvas) {
             }
         }
 
-        canvas.onmouseup = function (e){
+        canvas.onmouseup = function (e) {
             painting = false;
         }
     }
 }
 
-function drawCircle(x,y,radius) {
+function drawCircle(x, y, radius) {
     ctx.beginPath();
     // ctx.fillStyle = "black";
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
 }
 
-function drawLine(x1,y1,x2,y2) {
+function drawLine(x1, y1, x2, y2) {
     ctx.beginPath();
-    ctx.moveTo(x1,y1);
+    ctx.moveTo(x1, y1);
     ctx.lineWidth = 6;
-    ctx.lineTo(x2,y2);
+    ctx.lineTo(x2, y2);
     ctx.stroke();
     ctx.closePath();
 }
 
-eraser.onclick = function(){
+eraser.onclick = function () {
     clear = true;
     this.classList.add("active");
     brush.classList.remove("active");
 }
 
-brush.onclick = function(){
+brush.onclick = function () {
     clear = false;
     this.classList.add("active");
     eraser.classList.remove("active");
 }
 
-reSetCanvas.onclick = function(){
+reSetCanvas.onclick = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -138,18 +141,22 @@ save.onclick = function () {
     var saveA = document.createElement("a");
     document.body.appendChild(saveA);
     saveA.href = imgUrl;
-    saveA.download = "zspic"+(new Date).getTime();
+    saveA.download = "zspic" + (new Date).getTime();
     saveA.target = "_blank";
     saveA.click();
 }
-for(var i=0;i<aColorBtn.length;i++){
-    aColorBtn[i].onclick = function () {
-        for(var i=0;i<aColorBtn.length;i++) {
-            aColorBtn[i].classList.remove("active");
-            this.classList.add("active");
-            activeColor = this.style.backgroundColor;
-            ctx.fillStyle = activeColor;
-            ctx.strokeStyle = activeColor;
+
+function getColor(){
+    for (var i = 0; i < aColorBtn.length; i++) {
+        aColorBtn[i].onclick = function () {
+            for (var i = 0; i < aColorBtn.length; i++) {
+                aColorBtn[i].classList.remove("active");
+                this.classList.add("active");
+                activeColor = this.style.backgroundColor;
+                ctx.fillStyle = activeColor;
+                ctx.strokeStyle = activeColor;
+            }
         }
     }
 }
+
