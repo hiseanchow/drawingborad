@@ -2,14 +2,19 @@ var canvas = document.getElementById("drawing-board");
 var ctx = canvas.getContext("2d");
 var eraser = document.getElementById("eraser");
 var brush = document.getElementById("brush");
+var reSetCanvas = document.getElementById("clear");
+var save = document.getElementById("save");
 var clear = false;
+var aColorBtn = document.getElementsByClassName("color-item");
+var activeColor = 'black';
 
 autoSetSize(canvas);
-
+// setCanvasBGC('white');
 listenToUser(canvas);
 
 function autoSetSize(canvas){
     canvasSetSize();
+
     function canvasSetSize() {
         var pageWidth = document.documentElement.clientWidth;
         var pageHeight = document.documentElement.clientHeight;
@@ -17,9 +22,16 @@ function autoSetSize(canvas){
         canvas.width = pageWidth;
         canvas.height = pageHeight;
     }
+
     window.onresize = function () {
         canvasSetSize();
     }
+}
+
+function setCanvasBGC(color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "black";
 }
 
 function listenToUser(canvas) {
@@ -116,9 +128,20 @@ brush.onclick = function(){
     this.classList.add("active");
     eraser.classList.remove("active");
 }
-var aColorBtn = document.getElementsByClassName("color-item");
 
-var activeColor = 'black';
+reSetCanvas.onclick = function(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+save.onclick = function () {
+    var imgUrl = canvas.toDataURL("image/png");
+    var saveA = document.createElement("a");
+    document.body.appendChild(saveA);
+    saveA.href = imgUrl;
+    saveA.download = "zspic"+(new Date).getTime();
+    saveA.target = "_blank";
+    saveA.click();
+}
 for(var i=0;i<aColorBtn.length;i++){
     aColorBtn[i].onclick = function () {
         for(var i=0;i<aColorBtn.length;i++) {
