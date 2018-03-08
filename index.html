@@ -6,20 +6,18 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>canvas画板</title>
-    <style>
-        *{margin:0; padding: 0;}
-        body{overflow:hidden}
-        #drawing-board{background-color: aliceblue;display: block;}
-        .tools{position: fixed;left:20px;bottom: 20px;}
-        .tools button{border-radius: 5px; padding:2px 5px;background-color: white;border: 1px solid #ccc;outline: none;cursor: pointer;-moz-box-sizing: border-box;}
-        .tools button.active{border: 3px solid #00CCFF;}
-    </style>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_584725_0nyjbeaxjw2ep14i.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <canvas id="drawing-board"></canvas>
     <div class="tools">
-        <button id="eraser">橡皮擦</button>
-        <button id="brush" class="active">画笔</button>
+        <button id="brush" class="active" title="画笔"><i class="iconfont icon-qianbi"></i></button>
+        <button id="eraser" title="橡皮擦"><i class="iconfont icon-xiangpi"></i></button>
+        <button id="swatches" title="颜色"><i class="iconfont icon-color"></i></button>
+        <button id="clear" title="清空"><i class="iconfont icon-qingchu"></i></button>
+        <button id="undo" title="撤销"><i class="iconfont icon-chexiao"></i></button>
+        <button id="save" title="保存"><i class="iconfont icon-fuzhi"></i></button>
     </div>
 </body>
 <script>
@@ -58,7 +56,7 @@
                 ctx.clearRect(x - 5, y - 5, 10, 10)
             }else {
                 lastPoint = {"x": x, "y": y};
-                drawCircle(x, y, 2);
+                drawCircle(x, y, 3);
             }
         }
         canvas.onmousemove = function (e) {
@@ -69,7 +67,7 @@
                 if(clear){
                     ctx.clearRect(x - 5, y - 5, 10, 10)
                 }else {
-                    drawCircle(x, y, 2);
+                    drawCircle(x, y, 3);
                     drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
                 }
                 lastPoint = newPoint;
@@ -91,13 +89,11 @@
     function drawLine(x1,y1,x2,y2) {
         ctx.beginPath();
         ctx.moveTo(x1,y1);
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 6;
         ctx.lineTo(x2,y2);
         ctx.stroke();
         ctx.closePath();
     }
-
-
 
     eraser.onclick = function(){
         clear = true;
