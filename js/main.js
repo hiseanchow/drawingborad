@@ -9,11 +9,16 @@ var aColorBtn = document.getElementsByClassName("color-item");
 var activeColor = 'black';
 
 autoSetSize(canvas);
-// setCanvasBGC('white');
+
+setCanvasBg('white');
 
 listenToUser(canvas);
 
 getColor();
+
+window.onbeforeunload = function(e){
+    return "Reload site?";
+}
 
 function autoSetSize(canvas) {
     canvasSetSize();
@@ -31,7 +36,7 @@ function autoSetSize(canvas) {
     }
 }
 
-function setCanvasBGC(color) {
+function setCanvasBg(color) {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
@@ -159,4 +164,3 @@ function getColor(){
         }
     }
 }
-
