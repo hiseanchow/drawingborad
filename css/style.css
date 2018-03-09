@@ -1,6 +1,6 @@
 *{margin:0; padding: 0;user-select: none;}
 body{overflow:hidden}
-#drawing-board{background-color: white;position:fixed; display: block;cursor: crosshair;}
+#drawing-board{background: white;position:fixed; display: block;cursor: crosshair;}
 .tools{position: fixed;left:0;bottom: 30px; width:100%;display: flex;justify-content: center;text-align: center}
 .tools button{border-radius: 50%;width: 50px;height: 50px; background-color: rgba(255,255,255,0.7);border: 1px solid #eee;outline: none;cursor: pointer;box-sizing: border-box;margin: 0 10px;text-align: center;color:#ccc;line-height: 50px;box-shadow:0 0 8px rgba(0,0,0,0.1); transition: 0.3s;}
 .tools button.active,.tools button:active{box-shadow: 0 0 15px #00CCFF; color:#00CCFF;}
@@ -9,6 +9,13 @@ body{overflow:hidden}
 .color-group ul{list-style: none;}
 .color-group ul li{width: 30px;height: 30px; border:1px solid #eee;margin: 10px 0;border-radius: 50%;box-sizing: border-box;border:3px solid white;box-shadow: 0 0 8px rgba(0,0,0,0.2);cursor: pointer;transition: 0.3s;}
 .color-group ul li.active{box-shadow:0 0 15px #00CCFF;}
+#range-wrap{position: fixed;top: 50%;right:30px;width: 30px;height: 150px;margin-top: -75px;}
+#range-wrap input{transform: rotate(-90deg);width: 150px;height: 20px;margin: 0;transform-origin: 75px 75px;    border-radius: 15px;-webkit-appearance: none;outline: none;position: relative;}
+#range-wrap input::after{display: block;content:"";width:0;height: 0;border:5px solid transparent;
+    border-right:150px solid #00CCFF;border-left-width:0;position: absolute;left: 0;top: 5px;border-radius:15px; z-index: 0; }
+#range-wrap input[type=range]::-webkit-slider-thumb {-webkit-appearance: none;}
+#range-wrap input[type=range]::-webkit-slider-runnable-track {height: 10px;border-radius: 10px;box-shadow: none;background-color: white;}
+#range-wrap input[type=range]::-webkit-slider-thumb {-webkit-appearance: none;height: 20px;width: 20px;margin-top: -5px;background: #ffffff;border-radius: 50%;box-shadow: 0 0 8px #00CCFF;position: relative;z-index: 999;}
 
 @media screen and (max-width: 768px) {
     .tools{bottom:auto;top:20px;}
@@ -19,4 +26,5 @@ body{overflow:hidden}
     .color-group{left: 0;top:auto;bottom: 20px;display: flex;width:100%;justify-content: center;text-align: center;transform: translate(0,0)}
     .color-group ul li{display: inline-block;margin:0 5px;}
     .color-group ul li.active{box-shadow:0 0 10px #00CCFF;}
+    #range-wrap{right:auto;left: 20px;}
 }

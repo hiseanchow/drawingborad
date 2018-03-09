@@ -4,9 +4,12 @@ var eraser = document.getElementById("eraser");
 var brush = document.getElementById("brush");
 var reSetCanvas = document.getElementById("clear");
 var save = document.getElementById("save");
+var undo = document.getElementById("undo");
+var range = document.getElementById("range");
 var clear = false;
 var aColorBtn = document.getElementsByClassName("color-item");
 var activeColor = 'black';
+var lWidth = 4;
 
 autoSetSize(canvas);
 
@@ -43,32 +46,24 @@ function setCanvasBg(color) {
 }
 
 function listenToUser(canvas) {
-    var painting = false;
-    var lastPoint = {x: undefined, y: undefined};
+    let painting = false;
+    let lastPoint = {x: undefined, y: undefined};
 
     if (document.body.ontouchstart !== undefined) {
         canvas.ontouchstart = function (e) {
             painting = true;
-            var x = e.touches[0].clientX;
-            var y = e.touches[0].clientY;
-            if (clear) {
-                ctx.clearRect(x - 5, y - 5, 10, 10)
-            } else {
-                lastPoint = {"x": x, "y": y};
-                drawCircle(x, y, 3);
-            }
+            let x = e.touches[0].clientX;
+            let y = e.touches[0].clientY;
+            lastPoint = {"x": x, "y": y};
+            ctx.save();
+            drawCircle(x, y, 0);
         }
         canvas.ontouchmove = function (e) {
             if (painting) {
-                var x = e.touches[0].clientX;
-                var y = e.touches[0].clientY;
-                var newPoint = {"x": x, "y": y};
-                if (clear) {
-                    ctx.clearRect(x - 5, y - 5, 10, 10)
-                } else {
-                    drawCircle(x, y, 3);
-                    drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
-                }
+                let x = e.touches[0].clientX;
+                let y = e.touches[0].clientY;
+                let newPoint = {"x": x, "y": y};
+                drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
                 lastPoint = newPoint;
             }
         }
@@ -79,26 +74,19 @@ function listenToUser(canvas) {
     } else {
         canvas.onmousedown = function (e) {
             painting = true;
-            var x = e.clientX;
-            var y = e.clientY;
-            if (clear) {
-                ctx.clearRect(x - 5, y - 5, 10, 10)
-            } else {
-                lastPoint = {"x": x, "y": y};
-                drawCircle(x, y, 3);
-            }
+            let x = e.clientX;
+            let y = e.clientY;
+            lastPoint = {"x": x, "y": y};
+            ctx.save();
+            drawCircle(x, y, 0);
         }
         canvas.onmousemove = function (e) {
             if (painting) {
-                var x = e.clientX;
-                var y = e.clientY;
-                var newPoint = {"x": x, "y": y};
-                if (clear) {
-                    ctx.clearRect(x - 5, y - 5, 10, 10)
-                } else {
-                    drawCircle(x, y, 3);
-                    drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
-                }
+                let x = e.clientX;
+                let y = e.clientY;
+                let newPoint = {"x": x, "y": y};
+                // drawCircle(x, y, lWidth);
+                drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y,clear);
                 lastPoint = newPoint;
             }
         }
@@ -110,19 +98,41 @@ function listenToUser(canvas) {
 }
 
 function drawCircle(x, y, radius) {
+    ctx.save();
     ctx.beginPath();
-    // ctx.fillStyle = "black";
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
+    if (clear) {
+        ctx.clip();
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.restore();
+    }
 }
 
 function drawLine(x1, y1, x2, y2) {
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineWidth = 6;
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-    ctx.closePath();
+    ctx.lineWidth = lWidth;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    if (clear) {
+        ctx.save();
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.clip();
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.restore();
+    }else{
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath();
+    }
+}
+
+range.onchange = function(){
+    lWidth = this.value;
 }
 
 eraser.onclick = function () {
@@ -164,3 +174,5 @@ function getColor(){
         }
     }
 }
+
+// var historyUndo = [];
