@@ -1,5 +1,8 @@
 # Drawing Borad
 ### 用canvas实现一个涂鸦板
+
+预览链接：[https://zhoushuozh.github.io/drawingborad](https://zhoushuozh.github.io/drawingborad/)
+
 #### 目前实现功能：
 - 兼容PC和移动端
 - 多种笔刷颜色
@@ -12,7 +15,6 @@
 ### 实现思路
 
 #### 画笔功能
-
 1. 获取canvas
 2. 设置初始化当前画布功能为画笔状态，以为我们后边要做橡皮擦功能，点击橡皮擦和颜色的时候要做一个区分。
 3. 鼠标按下记录鼠标点击位置距离canvas画布的坐标并移动，记录上一个坐标点，然后移动鼠标开始画画
@@ -24,7 +26,6 @@
 2. 是，则使用touch事件；否，则使用mouse事件
 
 #### 颜色选择
-
 1. 点击颜色让画布的ctx.strokeStyle等于你点击的背景颜色
 2. 创建颜色数据结构
 
