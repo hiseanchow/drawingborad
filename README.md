@@ -1,7 +1,5 @@
 前些天学习了`HTML5`的`<canvas>`元素，今天就来实践一下，用`canvas`做一个画板。
 
-![alt](https://zhoushuo.me/static/upload/20180314/upload_9bc7bb98d37ef1a75791b3b6cf88b1aa.png)
-
 首先说一下要实现的功能：
 - 切换画笔颜色
 - 调整笔刷粗细
@@ -11,7 +9,7 @@
 - 保存成图片
 - 兼容移动端（支持触摸）
 
-好了，废话少说，先看最终效果：[https://zhoushuozh.github.io/drawingborad](https://zhoushuozh.github.io/drawingborad)
+好了，废话少说，先看最终效果：[https://hiseanchow.github.io/drawingborad](https://hiseanchow.github.io/drawingborad)
 
 ### 准备工作
 首先，准备个容器,也就是画板了。
